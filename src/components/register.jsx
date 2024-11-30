@@ -16,6 +16,11 @@ const Register = () => {
             className="w-full px-4 py-2 border rounded-md text-gray-800 focus:outline-none"
           />
           <input
+            type="number"
+            placeholder="NISN"
+            className="w-full px-4 py-2 border rounded-md text-gray-800 focus:outline-none"
+          />
+          <input
             type="text"
             placeholder="Divisi"
             className="w-full px-4 py-2 border rounded-md text-gray-800 focus:outline-none"
