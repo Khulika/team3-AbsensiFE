@@ -5,9 +5,9 @@ import googleLogo from "../assets/google.png";
 
 const Login = () => {
   return (
-    <div className="flex flex-col lg:flex-row h-screen">
+    <div className="flex flex-col lg:flex-row md:h-screen">
         {/* login kiri */}
-      <div className="flex flex-col justify-center items-center bg-blue-900 text-white lg:w-1/2 px-6 py-10">
+      <div className="flex flex-col justify-center items-center bg-blue-900 text-white px-6 h-screen">
         <h2 className="text-3xl font-bold mb-8">Masuk GoAbsen</h2>
         <form className="w-full max-w-sm space-y-4">
           <input
@@ -45,13 +45,13 @@ const Login = () => {
       </div>
 
       {/* login kanan */}
-      <div className="flex justify-center items-center bg-white lg:w-1/2 p-6">
+      <div className="flex justify-center items-center bg-white invisible md:visible p-6">
         <img
           src={imageLogin}
           alt="image login"
           className="max-w-full h-auto"
         />
-      </div>
+      </div> 
     </div>
   );
 };

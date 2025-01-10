@@ -140,7 +140,7 @@ const Peringkat = () => {
                         </div>
                     </div>
                     {/* Leaderboard Stats on the Right */}
-                    <div className="bg-[#110770] text-white p-6 rounded-lg">
+                    <div className="bg-blue-900 text-white p-6 rounded-lg">
                         <div className="flex items-center gap-2">
                             <img src={logoRanking} alt="ranking" />
                             <h3 className="flex text-xl font-bold">Leaderboard Bulan November </h3>

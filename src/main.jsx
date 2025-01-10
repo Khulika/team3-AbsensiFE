@@ -9,7 +9,6 @@ import DataDiri from "./user/dataDiri.jsx"
 import GoAbsen from "./user/goAbsen.jsx"
 import Peringkat from "./user/peringkat.jsx"
 import RekapAbsen from "./user/rekapAbsen.jsx"
-
 import './index.css'
 
 createRoot(document.getElementById('root')).render(
