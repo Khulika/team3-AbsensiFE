@@ -6,7 +6,6 @@ import logoBeranda from "../assets/logoBeranda.png";
 import logoBiodata from "../assets/logoBiodata.png";
 import logoPeringkat from "../assets/logoPeringkat.png";
 import logoRekap from "../assets/logoRekap.png";
-import logoMenu from "../assets/logoMenu.png";
 
 const Beranda = () => {
     const [userName, setUserName] = useState("");
@@ -21,17 +20,14 @@ const Beranda = () => {
     return (
         <div className="flex h-screen">
             {/* Sidebar */}
-            <div
-                className={`${isSidebarOpen ? "block" : "hidden"
-                    } fixed inset-0 z-50 w-2/4 md:w-1/4 bg-blue-900 text-white flex flex-col items-center py-6 md:block md:relative md:z-10 sidebar`}
-            >
+            <div className="w-1/4 bg-blue-900 text-white flex flex-col items-center py-6">
                 <div className="mb-10">
                     <img
                         src={logoIt}
                         alt="Logo IT Club"
                         className="w-20 h-20 mx-auto"
                     />
-                    <h2 className="text-xl text-center font-bold mt-4">GoAbsen</h2>
+                    <h2 className="text-xl font-bold mt-4">GoAbsen</h2>
                 </div>
                 {/* Menu Sidebar */}
                 <nav className="flex flex-col space-y-6 text-left w-full px-6">
@@ -92,22 +88,12 @@ const Beranda = () => {
                     </Link>
                 </nav>
 
-                <div className="mt-32 px-6 w-full">
+                <div className="mt-auto px-6 w-full">
                     <button className="w-full bg-red-600 hover:bg-red-700 py-2 px-4 rounded-lg text-white">
-                        <Link to="/">Logout</Link>
                         <Link to="/">Logout</Link>
                     </button>
                 </div>
             </div>
-
-            {/* Tombol Hamburger */}
-            <button
-                            className="md:hidden text-white text-2xl p-4 hamburger absolute left-0 top-0"
-                            onClick={toggleSidebar}
-                        >
-                            <img src={logoMenu} className="w-10 " alt="" />
-                            <i className={`fas ${isSidebarOpen ? "fa-times" : "fa-bars"}`}></i>
-                        </button>
 
             {/* Page Content */}
             <div className="flex-1 bg-white p-10">
@@ -120,27 +106,7 @@ const Beranda = () => {
 
                 <div className="bg-gray-200 p-6 rounded-lg">
                     <p>
-                        Jarkom 13122024
-                        <br />
-                        Assalamu'alaikum Warahmatullahi Wabarakatuh
-                    <br />
-                        Selamat siang teman", diberitahukan untuk semuanya bahwa akan diadakan kegiatan eskul pada :
-                    <br />
-                        Hari/tanggal : Sabtu, 14 Desember 2024 <br />
-                        Tempat : Lab RI <br />
-                        Waktu : 07.30 s.d selesai
-<br />
-                        Tambahan <br />
-                        1. Di usahakan datang lebih awal <br />
-                        2. Wajib hadir tepat waktu <br />
-                        3. Jika berhalangan hadir diharapkan izin terlebih dahulu ke Humas dan Pembimbing IT CLUB
-
-<br />
-                        Terima Kasih, wassalamu'alaikum warahmatullahi wabarakatuh
-
-<br />
-
-                        HumasITC'24
+                        Selamat datang di Aplikasi Absen ITClub. Pada aplikasi ini kalian akan bisa melakukan absen secara online dilengkapi dengan fitur batas jarak tertentu untuk mengisinya!
                     </p>
                 </div>
             </div>
@@ -149,4 +115,3 @@ const Beranda = () => {
 };
 
 export default Beranda;
-
