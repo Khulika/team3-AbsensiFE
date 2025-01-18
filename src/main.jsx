@@ -1,6 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import ReactDOM from "react-dom/client";
+// import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./components/login.jsx";
 import Register from "./components/register.jsx";
@@ -9,7 +9,6 @@ import DataDiri from "./user/dataDiri.jsx"
 import GoAbsen from "./user/goAbsen.jsx"
 import Peringkat from "./user/peringkat.jsx"
 import RekapAbsen from "./user/rekapAbsen.jsx"
-
 import './index.css'
 
 createRoot(document.getElementById('root')).render(

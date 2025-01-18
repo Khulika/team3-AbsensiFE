@@ -7,6 +7,7 @@ import logoBeranda from "../assets/logoBeranda.png";
 import logoBiodata from "../assets/logoBiodata.png";
 import logoPeringkat from "../assets/logoPeringkat.png";
 import logoRekap from "../assets/logoRekap.png";
+import logoMenu from "../assets/logoMenu.png";
 
 const RekapAbsen = () => {
   const [absensi, setAbsensi] = useState([]);
@@ -193,3 +194,4 @@ const RekapAbsen = () => {
 };
 
 export default RekapAbsen;
+
