@@ -6,6 +6,7 @@ import logoBeranda from "../assets/logoBeranda.png";
 import logoBiodata from "../assets/logoBiodata.png";
 import logoPeringkat from "../assets/logoPeringkat.png";
 import logoRekap from "../assets/logoRekap.png";
+import logoMenu from "../assets/logoMenu.png";
 
 const Beranda = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -121,14 +122,15 @@ const Beranda = () => {
 
             {/* Tombol Hamburger */}
             <button
-                className="md:hidden text-white text-2xl p-4 hamburger"
-                onClick={toggleSidebar}
-            >
-                <i className={`fas ${isSidebarOpen ? "fa-times" : "fa-bars"}`}></i>
-            </button>
+                            className="md:hidden text-white text-2xl p-4 hamburger absolute left-0 top-0"
+                            onClick={toggleSidebar}
+                        >
+                            <img src={logoMenu} className="w-10 " alt="" />
+                            <i className={`fas ${isSidebarOpen ? "fa-times" : "fa-bars"}`}></i>
+                        </button>
 
             {/* Page Content */}
-            <div className={`flex-1 bg-white p-10 ${isSidebarOpen ? "ml-1/4" : ""}`}>
+            <div className={`flex-1 bg-white p-16 ${isSidebarOpen ? "ml-1/4" : ""}`}>
                 <h1 className="text-3xl font-bold mb-6">Selamat Datang Khulika!</h1>
                 <Link to="/goAbsen">
                     <button className="bg-blue-900 text-white py-2 px-6 rounded-lg font-medium mb-6">
