@@ -120,7 +120,7 @@ const GoAbsen = () => {
       setAttendance("");
       setReason("");
     } catch (error) {
-      toast.error("Absen gagal !");
+      toast.error("Absen gagal, Anda tidak berada di area sekolah.");
     }
   };
 

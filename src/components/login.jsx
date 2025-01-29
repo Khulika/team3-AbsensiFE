@@ -43,6 +43,7 @@ const Login = () => {
       const data = await response.json();
       localStorage.setItem("accessToken", data.accessToken);
       localStorage.setItem("userName", data.userName);
+      localStorage.setItem("userId", data.userId);
       navigate("/beranda");
       toast.success("Login berhasil !");
     } catch (err) {
