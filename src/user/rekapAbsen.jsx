@@ -145,6 +145,12 @@ const RekapAbsen = () => {
                     Loading...
                   </td>
                 </tr>
+              ) : absensi.length === 0 ? (
+                <tr>
+                  <td colSpan="5" className="text-center py-6 text-gray-500">
+                    Tidak ada data absensi
+                  </td>
+                </tr>
               ) : (
                 currentAbsensi.map((data, index) => (
                   <tr
@@ -194,4 +200,3 @@ const RekapAbsen = () => {
 };
 
 export default RekapAbsen;
-
