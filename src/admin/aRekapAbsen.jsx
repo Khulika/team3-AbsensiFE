@@ -9,7 +9,7 @@ import logoPeringkat from "../assets/logoPeringkat.png";
 import logoRekap from "../assets/logoRekap.png";
 import logoMenu from "../assets/logoMenu.png";
 
-const RekapAbsen = () => {
+const AdminRekap = () => {
   const [absensi, setAbsensi] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -61,7 +61,7 @@ const RekapAbsen = () => {
           <h2 className="text-xl font-bold mt-4">GoAbsen</h2>
         </div>
         <nav className="flex flex-col space-y-6 text-left w-full px-6">
-          <Link to="/beranda">
+          {/* <Link to="/beranda">
             <a className="flex items-center gap-3 text-white hover:bg-blue-700 px-4 py-2 rounded-lg">
               <img
                 src={logoBeranda}
@@ -70,18 +70,18 @@ const RekapAbsen = () => {
               />
               <i className="fas fa-home"></i> Beranda
             </a>
-          </Link>
-          <Link to="/dataDiri">
+          </Link> */}
+          <Link to="/generateUser">
             <a className="flex items-center gap-3 text-white hover:bg-blue-700 px-4 py-2 rounded-lg">
               <img
                 src={logoBiodata}
                 alt="image beranda"
                 className="max-w-full h-auto"
               />
-              <i className="fas fa-user"></i> Data Diri
+              <i className="fas fa-user"></i> Buat User
             </a>
           </Link>
-          <Link to="/goAbsen">
+          {/* <Link to="/goAbsen">
             <a className="flex items-center gap-3 text-white hover:bg-blue-700 px-4 py-2 rounded-lg">
               <img
                 src={logoAbsen}
@@ -100,8 +100,8 @@ const RekapAbsen = () => {
               />
               <i className="fas fa-chart-line"></i> Peringkat
             </a>
-          </Link>
-          <Link to="/rekap">
+          </Link> */}
+          <Link to="/arekap">
             <a className="flex items-center gap-3 text-white hover:bg-blue-700 px-4 py-2 rounded-lg">
               <img
                 src={logoRekap}
@@ -122,7 +122,7 @@ const RekapAbsen = () => {
 
       {/* Page Content */}
       <div className="flex-1 bg-white p-10">
-        <h1 className="text-3xl font-bold mb-6">Lihat Rekap Absen!</h1>
+        <h1 className="text-3xl font-bold mb-6">Rekap Absen Siswa</h1>
 
         <div className="bg-white rounded-lg shadow-md overflow-hidden">
           <div className="bg-[#110770] text-white py-3 px-6 font-semibold">
@@ -199,4 +199,4 @@ const RekapAbsen = () => {
   );
 };
 
-export default RekapAbsen;
+export default AdminRekap;

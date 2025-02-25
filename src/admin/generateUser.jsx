@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import logoIt from "./../assets/logoIT.png";
+import logoPlus from "./../assets/logoPlus.png";
 import logoAbsen from "../assets/logoAbsen.png";
 import logoBeranda from "../assets/logoBeranda.png";
 import logoBiodata from "../assets/logoBiodata.png";
@@ -8,102 +9,145 @@ import logoPeringkat from "../assets/logoPeringkat.png";
 import logoRekap from "../assets/logoRekap.png";
 import avatarProfil from "../assets/Group 9.png";
 
-const DataDiri = () => {
-  const [profile, setProfile] = useState(null);
-  const [error, setError] = useState(null);
+const GenerateUser = () => {
+  // const [profile, setProfile] = useState(null);
+  // const [error, setError] = useState(null);
+  // const [loading, setLoading] = useState(true);
+  // const [isEditing, setIsEditing] = useState(false);
+  // const [formData, setFormData] = useState({
+  //   userName: "",
+  //   nisn: "",
+  //   divisi: "",
+  //   class: "",
+  //   address: "",
+  //   avatar: ""
+  // });
+  // const userId = localStorage.getItem("userId");
+
+  // useEffect(() => {
+  //   const fetchProfile = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         `http://localhost:3001/profiles/${userId}`,
+  //         {
+  //           headers: {
+  //             Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+  //           }
+  //         }
+  //       );
+
+  //       if (response.ok) {
+  //         const data = await response.json();
+  //         setProfile(data);
+  //         setFormData({
+  //           userName: data.userName || "", 
+  //           nisn: data.nisn || "",
+  //           divisi: data.divisi || "",
+  //           class: data.class || "",
+  //           address: data.address || "",
+  //           avatar: data.avatar || ""
+  //         });
+  //       } else {
+  //         setProfile(null);
+  //       }
+  //     } catch (error) {
+  //       setError("Terjadi kesalahan saat mengambil data.");
+  //     }
+  //   };
+
+  //   fetchProfile();
+  // }, [userId]);
+
+  // const handleEditProfile = () => {
+  //   setIsEditing(true);
+  // };
+
+  // const handleCancelEdit = () => {
+  //   setIsEditing(false);
+  // };
+
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setFormData((prevData) => ({
+  //     ...prevData,
+  //     [name]: value
+  //   }));
+  // };
+
+  // const handleSaveProfile = async () => {
+  //   try {
+  //     const response = await fetch(`http://localhost:3001/profiles/${userId}`, {
+  //       method: "PATCH",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+  //       },
+  //       body: JSON.stringify(formData)
+  //     });
+
+  //     if (response.ok) {
+  //       const updatedProfile = await response.json();
+  //       setProfile(updatedProfile);
+  //       setIsEditing(false);
+  //     } else {
+  //       setError("Gagal memperbarui profil.");
+  //     }
+  //   } catch (error) {
+  //     setError("Terjadi kesalahan saat memperbarui profil.");
+  //   }
+  // };
+
+
+  // if (error) {
+  //   return (
+  //     <div className="flex h-screen justify-center items-center text-red-500">
+  //       <p>{error}</p>
+  //     </div>
+  //   );
+  // }
+
+  const [absensi, setAbsensi] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [isEditing, setIsEditing] = useState(false);
-  const [formData, setFormData] = useState({
-    userName: "",
-    nisn: "",
-    divisi: "",
-    class: "",
-    address: "",
-    avatar: ""
-  });
-  const userId = localStorage.getItem("userId");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [perPage] = useState(5);
 
   useEffect(() => {
-    const fetchProfile = async () => {
+    const fetchAbsensi = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:3001/profiles/${userId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("accessToken")}`
-            }
-          }
-        );
+        const token = localStorage.getItem("accessToken");
 
-        if (response.ok) {
-          const data = await response.json();
-          setProfile(data);
-          setFormData({
-            userName: data.userName || "", 
-            nisn: data.nisn || "",
-            divisi: data.divisi || "",
-            class: data.class || "",
-            address: data.address || "",
-            avatar: data.avatar || ""
-          });
-        } else {
-          setProfile(null);
+        if (!token) {
+          throw new Error("Token tidak ditemukan");
         }
+
+        const userId = getUserIdFromToken(token);
+
+        const response = await axios.get(
+          `http://localhost:3001/attendance/user/${userId}`
+        );
+        setAbsensi(response.data);
       } catch (error) {
-        setError("Terjadi kesalahan saat mengambil data.");
+        console.error("Gagal mengambil data absensi", error);
+      } finally {
+        setLoading(false);
       }
     };
 
-    fetchProfile();
-  }, [userId]);
+    fetchAbsensi();
+  }, []);
 
-  const handleEditProfile = () => {
-    setIsEditing(true);
+  const getUserIdFromToken = (token) => {
+    const payload = token.split(".")[1];
+    const decodedPayload = JSON.parse(atob(payload));
+    return decodedPayload.userId;
   };
 
-  const handleCancelEdit = () => {
-    setIsEditing(false);
-  };
+  const indexOfLastItem = currentPage * perPage;
+  const indexOfFirstItem = indexOfLastItem - perPage;
+  const currentAbsensi = absensi.slice(indexOfFirstItem, indexOfLastItem);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value
-    }));
-  };
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  const handleSaveProfile = async () => {
-    try {
-      const response = await fetch(`http://localhost:3001/profiles/${userId}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`
-        },
-        body: JSON.stringify(formData)
-      });
-
-      if (response.ok) {
-        const updatedProfile = await response.json();
-        setProfile(updatedProfile);
-        setIsEditing(false);
-      } else {
-        setError("Gagal memperbarui profil.");
-      }
-    } catch (error) {
-      setError("Terjadi kesalahan saat memperbarui profil.");
-    }
-  };
-
-
-  if (error) {
-    return (
-      <div className="flex h-screen justify-center items-center text-red-500">
-        <p>{error}</p>
-      </div>
-    );
-  }
 
   return (
     <div className="flex h-screen">
@@ -114,7 +158,7 @@ const DataDiri = () => {
           <h2 className="text-xl font-bold mt-4">GoAbsen</h2>
         </div>
         <nav className="flex flex-col space-y-6 text-left w-full px-6">
-          <Link
+          {/* <Link
             to="/beranda"
             className="flex items-center gap-3 text-white hover:bg-blue-700 px-4 py-2 rounded-lg"
           >
@@ -124,9 +168,9 @@ const DataDiri = () => {
               className="max-w-full h-auto"
             />
             <i className="fas fa-home"></i> Beranda
-          </Link>
+          </Link> */}
           <Link
-            to="/dataDiri"
+            to="/generateUser"
             className="flex items-center gap-3 text-white hover:bg-blue-700 px-4 py-2 rounded-lg"
           >
             <img
@@ -134,9 +178,9 @@ const DataDiri = () => {
               alt="image beranda"
               className="max-w-full h-auto"
             />
-            <i className="fas fa-user"></i> Data Diri
+            <i className="fas fa-user"></i>Buat User
           </Link>
-          <Link
+          {/* <Link
             to="/goAbsen"
             className="flex items-center gap-3 text-white hover:bg-blue-700 px-4 py-2 rounded-lg"
           >
@@ -146,8 +190,8 @@ const DataDiri = () => {
               className="max-w-full h-auto"
             />
             <i className="fas fa-clipboard-check"></i> GoAbsen
-          </Link>
-          <Link
+          </Link> */}
+          {/* <Link
             to="/peringkat"
             className="flex items-center gap-3 text-white hover:bg-blue-700 px-4 py-2 rounded-lg"
           >
@@ -157,9 +201,9 @@ const DataDiri = () => {
               className="max-w-full h-auto"
             />
             <i className="fas fa-chart-line"></i> Peringkat
-          </Link>
+          </Link> */}
           <Link
-            to="/rekap"
+            to="/arekap"
             className="flex items-center gap-3 text-white hover:bg-blue-700 px-4 py-2 rounded-lg"
           >
             <img
@@ -180,136 +224,83 @@ const DataDiri = () => {
 
       {/* Page Content */}
       <div className="flex-1 bg-white p-10">
-        <h1 className="text-3xl font-bold mb-6">Ini Biodata Kamu!</h1>
-
-        {profile ? (
-          <div className="flex gap-10">
-            <div className="w-2/5">
-              <img src={avatarProfil} alt="Avatar" className="w-full h-auto" />
-            </div>
-
-            <div className="bg-blue-900 text-white p-6 rounded-lg w-full space-y-4">
-              <div className="bagan-nisn grid grid-cols-2 px-10 py-3 border-b-2">
-                <p>Nama & Password</p>
-                <p>
-                  {isEditing ? (
-                    <input
-                      type="text"
-                      name="userName"
-                      value={formData.userName}
-                      onChange={handleChange}
-                      className="bg-blue-700 text-white rounded-lg px-3 py-2 w-full"
-                    />
-                  ) : (
-                    profile.user?.userName || "Tidak tersedia"
-                  )}
-                </p>
-              </div>
-              <div className="bagan-nisn grid grid-cols-2 px-10 py-3 border-b-2">
-                <p>Jumlah User</p>
-                <p>
-                  {isEditing ? (
-                    <input
-                      type="text"
-                      name="nisn"
-                      value={formData.nisn}
-                      onChange={handleChange}
-                      className="bg-blue-700 text-white rounded-lg px-3 py-2 w-full"
-                    />
-                  ) : (
-                    profile.nisn || "Tidak tersedia"
-                  )}
-                </p>
-              </div>
-              <div className="bagan-divisi grid grid-cols-2 px-10 py-3 border-b-2">
-                <p>Divisi</p>
-                <p>
-                  {isEditing ? (
-                    <select
-                      name="divisi"
-                      value={formData.divisi}
-                      onChange={handleChange}
-                      className="bg-blue-700 text-white rounded-lg px-3 py-2 w-full"
-                    >
-                      <option value="">Pilih Divisi</option>
-                      <option value="PROGRAMMING">PROGRAMMING</option>
-                      <option value="NETWORKING">NETWORKING</option>
-                      <option value="MULTIMEDIA">MULTIMEDIA</option>
-                    </select>
-                  ) : (
-                    profile.user?.divisi || "Tidak tersedia"
-                  )}
-                </p>
-              </div>
-              <div className="bagan-kelas grid grid-cols-2 px-10 py-3 border-b-2">
-                <p>Kelas</p>
-                <p>
-                  {isEditing ? (
-                    <input
-                      type="text"
-                      name="class"
-                      value={formData.class}
-                      onChange={handleChange}
-                      className="bg-blue-700 text-white rounded-lg px-3 py-2 w-full"
-                    />
-                  ) : (
-                    profile.class || "Tidak tersedia"
-                  )}
-                </p>
-              </div>
-              <div className="bagan-alamat grid grid-cols-2 px-10 py-3 border-b-2">
-                <p>Alamat</p>
-                <p>
-                  {isEditing ? (
-                    <input
-                      type="text"
-                      name="address"
-                      value={formData.address}
-                      onChange={handleChange}
-                      className="bg-blue-700 text-white rounded-lg px-3 py-2 w-full"
-                    />
-                  ) : (
-                    profile.address || "Tidak tersedia"
-                  )}
-                </p>
-              </div>
-
-              {isEditing ? (
-                <div className="flex gap-4">
-                  <button
-                    onClick={handleSaveProfile}
-                    className="bg-blue-600 text-white py-2 px-6 rounded-lg"
-                  >
-                    Generate
-                  </button>
-                  <button
-                    onClick={handleCancelEdit}
-                    className="bg-gray-600 text-white py-2 px-6 rounded-lg"
-                  >
-                    Batal
-                  </button>
-                </div>
+        <h1 className="text-3xl font-bold mb-6">Buat Akun Siswa</h1>
+        
+        <div className="bg-white rounded-lg shadow-md overflow-hidden">
+          <div className="flex bg-[#110770] text-white font-semibold place-content-between">
+            <p className=" py-3 px-6 ">Rekap Absensi</p>
+            <button className="px-6 flex p-1 place-items-center">
+              <img src={logoPlus} alt="logo tambah" className="w-5 h-5 mx-auto" /> 
+              Tambah Akun</button>
+          </div>
+          <table className="w-full table-auto border-collapse">
+            <thead>
+              <tr className="bg-gray-100 border-b border-gray-200">
+                <th className="text-left py-3 px-4">No</th>
+                <th className="text-left py-3 px-4">Nama</th>
+                <th className="text-left py-3 px-4">Divisi</th>
+                <th className="text-left py-3 px-4">Password</th>
+              </tr>
+            </thead>
+            <tbody>
+              {loading ? (
+                <tr>
+                  <td colSpan="5" className="text-center py-6">
+                    Loading...
+                  </td>
+                </tr>
+              ) : absensi.length === 0 ? (
+                <tr>
+                  <td colSpan="5" className="text-center py-6 text-gray-500">
+                    Tidak ada data absensi
+                  </td>
+                </tr>
               ) : (
-                <button
-                  onClick={handleEditProfile}
-                  className="bg-[#D9D9D9] text-black py-2 px-6 rounded-lg font-medium mb-6"
-                >
-                  Generate
-                </button>
+                currentAbsensi.map((data, index) => (
+                  <tr
+                    key={data.id}
+                    className={`border-b border-gray-200 ${
+                      index % 2 === 0 ? "bg-gray-50" : "bg-white"
+                    }`}
+                  >
+                    <td className="py-3 px-4">
+                      {indexOfFirstItem + index + 1}
+                    </td>
+                    <td className="py-3 px-4">{data.user.userName}</td>
+                    <td className="py-3 px-4">{data.user.divisi}</td>
+                    <td className="py-3 px-4">{data.status}</td>
+                    <td className="py-3 px-4">
+                      {new Date(data.date).toLocaleDateString()}
+                    </td>
+                  </tr>
+                ))
               )}
-            </div>
-          </div>
-        ) : (
-          <div className="text-center">
-            <p className="mb-4">Profil belum tersedia.</p>
-            <button className="bg-blue-600 text-white py-2 px-6 rounded-lg">
-              Tambah Profil
-            </button>
-          </div>
-        )}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Pagination */}
+        <div className="mt-4 flex justify-center">
+          {Array.from(
+            { length: Math.ceil(absensi.length / perPage) },
+            (_, i) => (
+              <button
+                key={i + 1}
+                onClick={() => paginate(i + 1)}
+                className={`mx-1 px-3 py-1 rounded ${
+                  currentPage === i + 1
+                    ? "bg-blue-900 text-white"
+                    : "bg-gray-200"
+                }`}
+              >
+                {i + 1}
+              </button>
+            )
+          )}
+        </div>
       </div>
     </div>
   );
 };
 
-export default DataDiri;
+export default GenerateUser;

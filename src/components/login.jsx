@@ -86,7 +86,7 @@ const Login = () => {
             {loading ? "Loading..." : "Masuk"}
           </button>
           {error && <p className="text-red-500 text-center mt-2">{error}</p>}
-          <p className="text-center">Atau</p>
+          {/* <p className="text-center">Atau</p>
           <button
             type="button"
             className="w-full bg-white text-gray-800 py-2 rounded-md font-semibold flex justify-center items-center gap-3 border hover:bg-gray-100 transition"
@@ -99,7 +99,7 @@ const Login = () => {
             <Link to="/register" className="text-blue-300 hover:underline">
               Daftar disini
             </Link>
-          </p>
+          </p> */}
         </form>
       </div>
 
