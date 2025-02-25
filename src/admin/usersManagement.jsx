@@ -170,7 +170,7 @@ const GenerateUser = () => {
             <i className="fas fa-home"></i> Beranda
           </Link> */}
           <Link
-            to="/generateUser"
+            to="/usersmanage"
             className="flex items-center gap-3 text-white hover:bg-blue-700 px-4 py-2 rounded-lg"
           >
             <img
@@ -178,7 +178,7 @@ const GenerateUser = () => {
               alt="image beranda"
               className="max-w-full h-auto"
             />
-            <i className="fas fa-user"></i>Buat User
+            <i className="fas fa-user"></i>Users Management
           </Link>
           {/* <Link
             to="/goAbsen"

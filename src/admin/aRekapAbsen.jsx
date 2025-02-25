@@ -71,14 +71,14 @@ const AdminRekap = () => {
               <i className="fas fa-home"></i> Beranda
             </a>
           </Link> */}
-          <Link to="/generateUser">
+          <Link to="/usersmanage">
             <a className="flex items-center gap-3 text-white hover:bg-blue-700 px-4 py-2 rounded-lg">
               <img
                 src={logoBiodata}
                 alt="image beranda"
                 className="max-w-full h-auto"
               />
-              <i className="fas fa-user"></i> Buat User
+              <i className="fas fa-user"></i> Users Management
             </a>
           </Link>
           {/* <Link to="/goAbsen">

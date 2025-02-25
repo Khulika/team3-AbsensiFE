@@ -10,7 +10,7 @@ import GoAbsen from "./user/goAbsen.jsx"
 import Peringkat from "./user/peringkat.jsx"
 import RekapAbsen from "./user/rekapAbsen.jsx"
 import AdminRekap from "./admin/aRekapAbsen.jsx"
-import GenerateUser from "./admin/generateUser.jsx"
+import UsersManagement from "./admin/usersManagement.jsx"
 import './index.css'
 
 createRoot(document.getElementById('root')).render(
@@ -25,7 +25,7 @@ createRoot(document.getElementById('root')).render(
         <Route path="/peringkat" element={<Peringkat />} />
         <Route path="/rekap" element={<RekapAbsen />} />
         <Route path="/arekap" element={<AdminRekap />} />
-        <Route path="/generateUser" element={<GenerateUser />} />
+        <Route path="/usersmanage" element={<UsersManagement />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>,
