@@ -2,10 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import logoIt from "./../assets/logoIT.png";
-import logoAbsen from "../assets/logoAbsen.png";
-import logoBeranda from "../assets/logoBeranda.png";
 import logoBiodata from "../assets/logoBiodata.png";
-import logoPeringkat from "../assets/logoPeringkat.png";
 import logoRekap from "../assets/logoRekap.png";
 import logoMenu from "../assets/logoMenu.png";
 
@@ -14,6 +11,7 @@ const AdminRekap = () => {
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage] = useState(5);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
     const fetchAbsensi = async () => {
@@ -52,64 +50,36 @@ const AdminRekap = () => {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
   return (
     <div className="flex h-screen">
       {/* Sidebar */}
-      <div className="w-1/4 bg-blue-900 text-white flex flex-col items-center py-6">
+      <div
+        className={`w-64 bg-blue-900 text-white flex flex-col items-center py-6 fixed h-full transform ${
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        } md:translate-x-0 md:relative transition-transform duration-300 ease-in-out z-50`}
+      >
         <div className="mb-10">
           <img src={logoIt} alt="Logo IT Club" className="w-20 h-20 mx-auto" />
           <h2 className="text-xl font-bold mt-4">GoAbsen</h2>
         </div>
         <nav className="flex flex-col space-y-6 text-left w-full px-6">
-          {/* <Link to="/beranda">
-            <a className="flex items-center gap-3 text-white hover:bg-blue-700 px-4 py-2 rounded-lg">
-              <img
-                src={logoBeranda}
-                alt="image beranda"
-                className="max-w-full h-auto"
-              />
-              <i className="fas fa-home"></i> Beranda
-            </a>
-          </Link> */}
-          <Link to="/usersmanage">
-            <a className="flex items-center gap-3 text-white hover:bg-blue-700 px-4 py-2 rounded-lg">
-              <img
-                src={logoBiodata}
-                alt="image beranda"
-                className="max-w-full h-auto"
-              />
-              <i className="fas fa-user"></i> Users Management
-            </a>
+          <Link
+            to="/usersmanage"
+            className="flex items-center gap-3 text-white hover:bg-blue-700 px-4 py-2 rounded-lg"
+          >
+            <img src={logoBiodata} alt="Users" className="max-w-full h-auto" />
+            <i className="fas fa-user"></i> Users Management
           </Link>
-          {/* <Link to="/goAbsen">
-            <a className="flex items-center gap-3 text-white hover:bg-blue-700 px-4 py-2 rounded-lg">
-              <img
-                src={logoAbsen}
-                alt="image beranda"
-                className="max-w-full h-auto"
-              />
-              <i className="fas fa-clipboard-check"></i> GoAbsen
-            </a>
-          </Link>
-          <Link to="/peringkat">
-            <a className="flex items-center gap-3 text-white hover:bg-blue-700 px-4 py-2 rounded-lg">
-              <img
-                src={logoPeringkat}
-                alt="image beranda"
-                className="max-w-full h-auto"
-              />
-              <i className="fas fa-chart-line"></i> Peringkat
-            </a>
-          </Link> */}
-          <Link to="/arekap">
-            <a className="flex items-center gap-3 text-white hover:bg-blue-700 px-4 py-2 rounded-lg">
-              <img
-                src={logoRekap}
-                alt="image beranda"
-                className="max-w-full h-auto"
-              />
-              <i className="fas fa-file-alt"></i> Rekap
-            </a>
+          <Link
+            to="/arekap"
+            className="flex items-center gap-3 text-white hover:bg-blue-700 px-4 py-2 rounded-lg"
+          >
+            <img src={logoRekap} alt="Rekap" className="max-w-full h-auto" />
+            <i className="fas fa-file-alt"></i> Rekap
           </Link>
         </nav>
 
@@ -122,57 +92,69 @@ const AdminRekap = () => {
 
       {/* Page Content */}
       <div className="flex-1 bg-white p-10">
+        {/* Burger Menu Button */}
+        <button
+          onClick={toggleSidebar}
+          className="md:hidden fixed top-4 left-4 z-50 bg-white text-white p-2 rounded-lg"
+        >
+          <img src={logoMenu} alt="Menu" className="w-6 h-6" />
+        </button>
+
         <h1 className="text-3xl font-bold mb-6">Rekap Absen Siswa</h1>
 
         <div className="bg-white rounded-lg shadow-md overflow-hidden">
           <div className="bg-[#110770] text-white py-3 px-6 font-semibold">
             Rekap Absensi
           </div>
-          <table className="w-full table-auto border-collapse">
-            <thead>
-              <tr className="bg-gray-100 border-b border-gray-200">
-                <th className="text-left py-3 px-4">No</th>
-                <th className="text-left py-3 px-4">Nama</th>
-                <th className="text-left py-3 px-4">Divisi</th>
-                <th className="text-left py-3 px-4">Status</th>
-                <th className="text-left py-3 px-4">Tanggal Absen</th>
-              </tr>
-            </thead>
-            <tbody>
-              {loading ? (
-                <tr>
-                  <td colSpan="5" className="text-center py-6">
-                    Loading...
-                  </td>
+
+          {/* Scrollable Table on Small Screens */}
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[600px] table-auto border-collapse">
+              <thead>
+                <tr className="bg-gray-100 border-b border-gray-200">
+                  <th className="text-left py-3 px-4">No</th>
+                  <th className="text-left py-3 px-4">Nama</th>
+                  <th className="text-left py-3 px-4">Divisi</th>
+                  <th className="text-left py-3 px-4">Status</th>
+                  <th className="text-left py-3 px-4">Tanggal Absen</th>
                 </tr>
-              ) : absensi.length === 0 ? (
-                <tr>
-                  <td colSpan="5" className="text-center py-6 text-gray-500">
-                    Tidak ada data absensi
-                  </td>
-                </tr>
-              ) : (
-                currentAbsensi.map((data, index) => (
-                  <tr
-                    key={data.id}
-                    className={`border-b border-gray-200 ${
-                      index % 2 === 0 ? "bg-gray-50" : "bg-white"
-                    }`}
-                  >
-                    <td className="py-3 px-4">
-                      {indexOfFirstItem + index + 1}
-                    </td>
-                    <td className="py-3 px-4">{data.user.userName}</td>
-                    <td className="py-3 px-4">{data.user.divisi}</td>
-                    <td className="py-3 px-4">{data.status}</td>
-                    <td className="py-3 px-4">
-                      {new Date(data.date).toLocaleDateString()}
+              </thead>
+              <tbody>
+                {loading ? (
+                  <tr>
+                    <td colSpan="5" className="text-center py-6">
+                      Loading...
                     </td>
                   </tr>
-                ))
-              )}
-            </tbody>
-          </table>
+                ) : absensi.length === 0 ? (
+                  <tr>
+                    <td colSpan="5" className="text-center py-6 text-gray-500">
+                      Tidak ada data absensi
+                    </td>
+                  </tr>
+                ) : (
+                  currentAbsensi.map((data, index) => (
+                    <tr
+                      key={data.id}
+                      className={`border-b border-gray-200 ${
+                        index % 2 === 0 ? "bg-gray-50" : "bg-white"
+                      }`}
+                    >
+                      <td className="py-3 px-4">
+                        {indexOfFirstItem + index + 1}
+                      </td>
+                      <td className="py-3 px-4">{data.user.userName}</td>
+                      <td className="py-3 px-4">{data.user.divisi}</td>
+                      <td className="py-3 px-4">{data.status}</td>
+                      <td className="py-3 px-4">
+                        {new Date(data.date).toLocaleDateString()}
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
 
         {/* Pagination */}

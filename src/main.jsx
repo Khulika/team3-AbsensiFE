@@ -8,7 +8,7 @@ import Login from "./components/login.jsx";
 import DataDiri from "./user/dataDiri.jsx"
 import GoAbsen from "./user/goAbsen.jsx"
 import Peringkat from "./user/peringkat.jsx"
-import RekapAbsen from "./user/rekapAbsen.jsx"
+// import RekapAbsen from "./user/rekapAbsen.jsx"
 import AdminRekap from "./admin/aRekapAbsen.jsx"
 import UsersManagement from "./admin/usersManagement.jsx"
 import './index.css'
@@ -23,7 +23,7 @@ createRoot(document.getElementById('root')).render(
         <Route path="/dataDiri" element={<DataDiri />} />
         <Route path="/goAbsen" element={<GoAbsen />} />
         <Route path="/peringkat" element={<Peringkat />} />
-        <Route path="/rekap" element={<RekapAbsen />} />
+        {/* <Route path="/rekap" element={<RekapAbsen />} /> */}
         <Route path="/arekap" element={<AdminRekap />} />
         <Route path="/usersmanage" element={<UsersManagement />} />
       </Routes>

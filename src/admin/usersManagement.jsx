@@ -8,6 +8,8 @@ import logoBiodata from "../assets/logoBiodata.png";
 import logoPeringkat from "../assets/logoPeringkat.png";
 import logoRekap from "../assets/logoRekap.png";
 import avatarProfil from "../assets/Group 9.png";
+import logoMenu from "../assets/logoMenu.png";
+
 
 const GenerateUser = () => {
   // const [profile, setProfile] = useState(null);
@@ -15,6 +17,8 @@ const GenerateUser = () => {
   // const [loading, setLoading] = useState(true);
   // const [isEditing, setIsEditing] = useState(false);
   // const [formData, setFormData] = useState({
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  
   //   userName: "",
   //   nisn: "",
   //   divisi: "",
@@ -148,82 +152,56 @@ const GenerateUser = () => {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
 
   return (
     <div className="flex h-screen">
       {/* Sidebar */}
-      <div className="w-1/4 bg-blue-900 text-white flex flex-col items-center py-6">
-        <div className="mb-10">
-          <img src={logoIt} alt="Logo IT Club" className="w-20 h-20 mx-auto" />
-          <h2 className="text-xl font-bold mt-4">GoAbsen</h2>
-        </div>
-        <nav className="flex flex-col space-y-6 text-left w-full px-6">
-          {/* <Link
-            to="/beranda"
-            className="flex items-center gap-3 text-white hover:bg-blue-700 px-4 py-2 rounded-lg"
-          >
-            <img
-              src={logoBeranda}
-              alt="image beranda"
-              className="max-w-full h-auto"
-            />
-            <i className="fas fa-home"></i> Beranda
-          </Link> */}
-          <Link
-            to="/usersmanage"
-            className="flex items-center gap-3 text-white hover:bg-blue-700 px-4 py-2 rounded-lg"
-          >
-            <img
-              src={logoBiodata}
-              alt="image beranda"
-              className="max-w-full h-auto"
-            />
-            <i className="fas fa-user"></i>Users Management
-          </Link>
-          {/* <Link
-            to="/goAbsen"
-            className="flex items-center gap-3 text-white hover:bg-blue-700 px-4 py-2 rounded-lg"
-          >
-            <img
-              src={logoAbsen}
-              alt="image beranda"
-              className="max-w-full h-auto"
-            />
-            <i className="fas fa-clipboard-check"></i> GoAbsen
-          </Link> */}
-          {/* <Link
-            to="/peringkat"
-            className="flex items-center gap-3 text-white hover:bg-blue-700 px-4 py-2 rounded-lg"
-          >
-            <img
-              src={logoPeringkat}
-              alt="image beranda"
-              className="max-w-full h-auto"
-            />
-            <i className="fas fa-chart-line"></i> Peringkat
-          </Link> */}
-          <Link
-            to="/arekap"
-            className="flex items-center gap-3 text-white hover:bg-blue-700 px-4 py-2 rounded-lg"
-          >
-            <img
-              src={logoRekap}
-              alt="image beranda"
-              className="max-w-full h-auto"
-            />
-            <i className="fas fa-file-alt"></i> Rekap
-          </Link>
-        </nav>
-
-        <div className="mt-auto px-6 w-full">
-          <button className="w-full bg-red-600 hover:bg-red-700 py-2 px-4 rounded-lg text-white">
-            <Link to="/">Logout</Link>
-          </button>
-        </div>
-      </div>
+            <div
+              className={`w-64 bg-blue-900 text-white flex flex-col items-center py-6 fixed h-full transform ${
+                isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+              } md:translate-x-0 md:relative transition-transform duration-300 ease-in-out z-50`}
+            >
+              <div className="mb-10">
+                <img src={logoIt} alt="Logo IT Club" className="w-20 h-20 mx-auto" />
+                <h2 className="text-xl font-bold mt-4">GoAbsen</h2>
+              </div>
+              <nav className="flex flex-col space-y-6 text-left w-full px-6">
+                <Link
+                  to="/usersmanage"
+                  className="flex items-center gap-3 text-white hover:bg-blue-700 px-4 py-2 rounded-lg"
+                >
+                  <img src={logoBiodata} alt="Users" className="max-w-full h-auto" />
+                  <i className="fas fa-user"></i> Users Management
+                </Link>
+                <Link
+                  to="/arekap"
+                  className="flex items-center gap-3 text-white hover:bg-blue-700 px-4 py-2 rounded-lg"
+                >
+                  <img src={logoRekap} alt="Rekap" className="max-w-full h-auto" />
+                  <i className="fas fa-file-alt"></i> Rekap
+                </Link>
+              </nav>
+      
+              <div className="mt-auto px-6 w-full">
+                <button className="w-full bg-red-600 hover:bg-red-700 py-2 px-4 rounded-lg text-white">
+                  <Link to="/">Logout</Link>
+                </button>
+              </div>
+            </div>
 
       {/* Page Content */}
       <div className="flex-1 bg-white p-10">
+        {/* Burger Menu Button */}
+                <button
+                  onClick={toggleSidebar}
+                  className="md:hidden fixed top-4 left-4 z-50 bg-white text-white p-2 rounded-lg"
+                >
+                  <img src={logoMenu} alt="Menu" className="w-6 h-6" />
+                </button>
+                
         <h1 className="text-3xl font-bold mb-6">Buat Akun Siswa</h1>
         
         <div className="bg-white rounded-lg shadow-md overflow-hidden">

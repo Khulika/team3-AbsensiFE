@@ -27,7 +27,7 @@ const Peringkat = () => {
                 </div>
                 {/* Menu Sidebar */}
                 <nav className="flex flex-col space-y-6 text-left w-full px-6">
-                    <Link to="/beranda">
+                    {/* <Link to="/beranda">
                         <a href="#" className="flex items-center gap-3 text-white hover:bg-blue-700 px-4 py-2 rounded-lg">
                             <img
                                 src={logoBeranda}
@@ -35,6 +35,16 @@ const Peringkat = () => {
                                 className="max-w-full h-auto"
                             />
                             <i className="fas fa-home"></i> Beranda
+                        </a>
+                    </Link> */}
+                    <Link to="/goAbsen">
+                        <a href="#" className="flex items-center gap-3 text-white hover:bg-blue-700 px-4 py-2 rounded-lg">
+                            <img
+                                src={logoAbsen}
+                                alt="image beranda"
+                                className="max-w-full h-auto"
+                            />
+                            <i className="fas fa-clipboard-check"></i> GoAbsen
                         </a>
                     </Link>
                     <Link to="/dataDiri">
@@ -47,16 +57,6 @@ const Peringkat = () => {
                             <i className="fas fa-user"></i> Data Diri
                         </a>
                     </Link>
-                    <Link to="/goAbsen">
-                        <a href="#" className="flex items-center gap-3 text-white hover:bg-blue-700 px-4 py-2 rounded-lg">
-                            <img
-                                src={logoAbsen}
-                                alt="image beranda"
-                                className="max-w-full h-auto"
-                            />
-                            <i className="fas fa-clipboard-check"></i> GoAbsen
-                        </a>
-                    </Link>
                     <Link to="/peringkat">
                         <a href="#" className="flex items-center gap-3 text-white hover:bg-blue-700 px-4 py-2 rounded-lg">
                             <img
@@ -67,7 +67,7 @@ const Peringkat = () => {
                             <i className="fas fa-chart-line"></i> Peringkat
                         </a>
                     </Link>
-                    <Link to="/rekap">
+                    {/* <Link to="/rekap">
                         <a href="#" className="flex items-center gap-3 text-white hover:bg-blue-700 px-4 py-2 rounded-lg">
                             <img
                                 src={logoRekap}
@@ -76,7 +76,7 @@ const Peringkat = () => {
                             />
                             <i className="fas fa-file-alt"></i> Rekap
                         </a>
-                    </Link>
+                    </Link> */}
                 </nav>
 
                 <div className="mt-auto px-6 w-full">

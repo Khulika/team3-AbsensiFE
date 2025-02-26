@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+// logo
 import logoIt from "./../assets/logoIT.png";
+import logoMenu from "../assets/logoMenu.png";
 import logoAbsen from "../assets/logoAbsen.png";
 import logoBeranda from "../assets/logoBeranda.png";
 import logoBiodata from "../assets/logoBiodata.png";
 import logoPeringkat from "../assets/logoPeringkat.png";
 import logoRekap from "../assets/logoRekap.png";
+// img
 import avatarProfil from "../assets/Group 9.png";
 
 const DataDiri = () => {
@@ -114,7 +117,7 @@ const DataDiri = () => {
           <h2 className="text-xl font-bold mt-4">GoAbsen</h2>
         </div>
         <nav className="flex flex-col space-y-6 text-left w-full px-6">
-          <Link
+          {/* <Link
             to="/beranda"
             className="flex items-center gap-3 text-white hover:bg-blue-700 px-4 py-2 rounded-lg"
           >
@@ -124,6 +127,17 @@ const DataDiri = () => {
               className="max-w-full h-auto"
             />
             <i className="fas fa-home"></i> Beranda
+          </Link> */}
+          <Link
+            to="/goAbsen"
+            className="flex items-center gap-3 text-white hover:bg-blue-700 px-4 py-2 rounded-lg"
+          >
+            <img
+              src={logoAbsen}
+              alt="image beranda"
+              className="max-w-full h-auto"
+            />
+            <i className="fas fa-clipboard-check"></i> GoAbsen
           </Link>
           <Link
             to="/dataDiri"
@@ -137,17 +151,6 @@ const DataDiri = () => {
             <i className="fas fa-user"></i> Data Diri
           </Link>
           <Link
-            to="/goAbsen"
-            className="flex items-center gap-3 text-white hover:bg-blue-700 px-4 py-2 rounded-lg"
-          >
-            <img
-              src={logoAbsen}
-              alt="image beranda"
-              className="max-w-full h-auto"
-            />
-            <i className="fas fa-clipboard-check"></i> GoAbsen
-          </Link>
-          <Link
             to="/peringkat"
             className="flex items-center gap-3 text-white hover:bg-blue-700 px-4 py-2 rounded-lg"
           >
@@ -158,7 +161,7 @@ const DataDiri = () => {
             />
             <i className="fas fa-chart-line"></i> Peringkat
           </Link>
-          <Link
+          {/* <Link
             to="/rekap"
             className="flex items-center gap-3 text-white hover:bg-blue-700 px-4 py-2 rounded-lg"
           >
@@ -168,7 +171,7 @@ const DataDiri = () => {
               className="max-w-full h-auto"
             />
             <i className="fas fa-file-alt"></i> Rekap
-          </Link>
+          </Link> */}
         </nav>
 
         <div className="mt-auto px-6 w-full">
