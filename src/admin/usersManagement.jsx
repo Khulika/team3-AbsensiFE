@@ -17,7 +17,7 @@ import {
 } from "react-icons/fa";
 
 const GenerateUser = () => {
-  const [users, setUsers] = useState([]); 
+  const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage] = useState(5);
@@ -87,13 +87,31 @@ const GenerateUser = () => {
       {/* Page Content */}
       <div className="flex-1 bg-white p-10">
         <h1 className="text-3xl font-bold mb-6">Manajemen User</h1>
-        
+
         <div className="bg-white rounded-lg shadow-md overflow-hidden">
-          <div className="flex bg-[#110770] text-white font-semibold place-content-between">
-            <p className="py-3 px-6">Daftar User</p>
-            <button className="px-6 flex p-1 place-items-center">
-              <FaPlus className="mr-2 bg-blue text-2xl"/>
+          <div className="flex bg-[#110770] font-semibold place-content-between">
+            <p className="py-3 px-6 text-white">Daftar User</p>
+            {/* Modal button */}
+            <button className="px-6 flex p-1 place-items-center" onClick={()=>document.getElementById('my_modal_1').showModal()}> 
+              <FaPlus className="mr-2 bg-blue text-2xl text-white" />
             </button>
+            {/* Modal input */}
+            <dialog id="my_modal_1" className="modal">
+              <div className="modal-box">
+                <h3 className="font-bold text-lg text-blue-900">Tambah User</h3>
+                <label className="text-blue-900 font-semibold" htmlFor="">Nama</label>
+                <input className="w-full border border-blue-500 rounded-xs p-1" type="text" name="" id="" />
+                <label className="text-blue-900 font-semibold" htmlFor="">Divisi</label>
+                <input className="w-full border border-blue-500 rounded-xs p-1" type="text" name="" id="" />
+                <label className="text-blue-900 font-semibold" htmlFor="">Password</label>
+                <input className="w-full border border-blue-500 rounded-xs p-1" type="password" name="" id="" />
+                <div className="modal-action">
+                  <form method="dialog">
+                    <button className="btn text-blue">Close</button>
+                  </form>
+                </div>
+              </div>
+            </dialog>
           </div>
           <table className="w-full table-auto border-collapse">
             <thead>
@@ -119,9 +137,8 @@ const GenerateUser = () => {
                 currentUsers.map((user, index) => (
                   <tr
                     key={user.id}
-                    className={`border-b border-gray-200 ${
-                      index % 2 === 0 ? "bg-gray-50" : "bg-white"
-                    }`}
+                    className={`border-b border-gray-200 ${index % 2 === 0 ? "bg-gray-50" : "bg-white"
+                      }`}
                   >
                     <td className="py-3 px-4">{indexOfFirstItem + index + 1}</td>
                     <td className="py-3 px-4">{user.userName}</td>
@@ -152,11 +169,10 @@ const GenerateUser = () => {
               <button
                 key={i + 1}
                 onClick={() => paginate(i + 1)}
-                className={`mx-1 px-3 py-1 rounded ${
-                  currentPage === i + 1
+                className={`mx-1 px-3 py-1 rounded ${currentPage === i + 1
                     ? "bg-blue-900 text-white"
                     : "bg-gray-200"
-                }`}
+                  }`}
               >
                 {i + 1}
               </button>
