@@ -14,6 +14,8 @@ import {
   FaTrashAlt,
   FaSearch,
   FaPlus,
+  FaEye,
+  FaEyeSlash
 } from "react-icons/fa";
 
 const GenerateUser = () => {
@@ -21,6 +23,8 @@ const GenerateUser = () => {
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage] = useState(5);
+  const [showPassword, setShowPassword] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -32,7 +36,7 @@ const GenerateUser = () => {
         }
 
         const response = await axios.get(`http://localhost:3001/users`, {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: { Authorization: `Bearer ${token}` }
         });
 
         setUsers(response.data);
@@ -65,14 +69,22 @@ const GenerateUser = () => {
             to="/usersmanage"
             className="flex items-center gap-3 text-white hover:bg-blue-700 px-4 py-2 rounded-lg"
           >
-            <img src={logoBiodata} alt="image beranda" className="max-w-full h-auto" />
+            <img
+              src={logoBiodata}
+              alt="image beranda"
+              className="max-w-full h-auto"
+            />
             <i className="fas fa-user"></i>Users Management
           </Link>
           <Link
             to="/arekap"
             className="flex items-center gap-3 text-white hover:bg-blue-700 px-4 py-2 rounded-lg"
           >
-            <img src={logoRekap} alt="image beranda" className="max-w-full h-auto" />
+            <img
+              src={logoRekap}
+              alt="image beranda"
+              className="max-w-full h-auto"
+            />
             <i className="fas fa-file-alt"></i> Rekap
           </Link>
         </nav>
@@ -92,23 +104,161 @@ const GenerateUser = () => {
           <div className="flex bg-[#110770] font-semibold place-content-between">
             <p className="py-3 px-6 text-white">Daftar User</p>
             {/* Modal button */}
-            <button className="px-6 flex p-1 place-items-center" onClick={()=>document.getElementById('my_modal_1').showModal()}> 
+            <button
+              className="px-6 flex p-1 place-items-center"
+              onClick={() => document.getElementById("my_modal_1").showModal()}
+            >
               <FaPlus className="mr-2 bg-blue text-2xl text-white" />
             </button>
             {/* Modal input */}
             <dialog id="my_modal_1" className="modal">
-              <div className="modal-box">
-                <h3 className="font-bold text-lg text-blue-900">Tambah User</h3>
-                <label className="text-blue-900 font-semibold" htmlFor="">Nama</label>
-                <input className="w-full border border-blue-500 rounded-xs p-1" type="text" name="" id="" />
-                <label className="text-blue-900 font-semibold" htmlFor="">Divisi</label>
-                <input className="w-full border border-blue-500 rounded-xs p-1" type="text" name="" id="" />
-                <label className="text-blue-900 font-semibold" htmlFor="">Password</label>
-                <input className="w-full border border-blue-500 rounded-xs p-1" type="password" name="" id="" />
-                <div className="modal-action">
+              <div className="modal-box bg-white p-6 rounded-lg shadow-lg">
+                <h3 className="font-bold text-xl text-blue-900 mb-4">
+                  Tambah User
+                </h3>
+
+                {/* Input Nama */}
+                <label className="text-blue-900 font-semibold block mb-1">
+                  Nama
+                </label>
+                <input
+                  className="w-full border border-blue-500 rounded-md p-2 mb-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  type="text"
+                  placeholder="Masukkan nama"
+                />
+
+                {/* Select Divisi */}
+                <label className="text-blue-900 font-semibold block mb-1">
+                  Divisi
+                </label>
+                <select className="w-full border border-blue-500 rounded-md p-2 mb-3 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                  <option value="" disabled>
+                    Pilih Divisi
+                  </option>
+                  <option value="PROGRAMMING">PROGRAMMING</option>
+                  <option value="NETWORKING">NETWORKING</option>
+                  <option value="MULTIMEDIA">MULTIMEDIA</option>
+                </select>
+
+                {/* Input Password dengan Icon */}
+                <label className="text-blue-900 font-semibold block mb-1">
+                  Password
+                </label>
+                <div className="relative">
+                  <input
+                    className="w-full border border-blue-500 rounded-md p-2 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Masukkan password"
+                  />
+                  <button
+                    type="button"
+                    className="absolute right-3 top-3 text-blue-500 hover:text-blue-700"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? (
+                      <FaEyeSlash size={20} />
+                    ) : (
+                      <FaEye size={20} />
+                    )}
+                  </button>
+                </div>
+
+                {/* Tombol Close */}
+                <div className="modal-action flex justify-end mt-4">
                   <form method="dialog">
-                    <button className="btn text-blue">Close</button>
+                    <button className="btn bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition">
+                      Close
+                    </button>
                   </form>
+                </div>
+              </div>
+            </dialog>
+            {/* modal edit */}
+            <dialog id="my_modal_2" className="modal">
+              <div className="modal-box bg-white p-6 rounded-lg shadow-lg">
+                <h3 className="font-bold text-xl text-blue-900 mb-4">
+                  Edit User
+                </h3>
+
+                {/* Input Nama */}
+                <label className="text-blue-900 font-semibold block mb-1">
+                  Nama
+                </label>
+                <input
+                  className="w-full border border-blue-500 rounded-md p-2 mb-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  type="text"
+                  placeholder="Masukkan nama"
+                />
+
+                {/* Select Divisi */}
+                <label className="text-blue-900 font-semibold block mb-1">
+                  Divisi
+                </label>
+                <select className="w-full border border-blue-500 rounded-md p-2 mb-3 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                  <option value="" disabled>
+                    Pilih Divisi
+                  </option>
+                  <option value="PROGRAMMING">PROGRAMMING</option>
+                  <option value="NETWORKING">NETWORKING</option>
+                  <option value="MULTIMEDIA">MULTIMEDIA</option>
+                </select>
+
+                {/* Input Password dengan Icon */}
+                <label className="text-blue-900 font-semibold block mb-1">
+                  Password
+                </label>
+                <div className="relative">
+                  <input
+                    className="w-full border border-blue-500 rounded-md p-2 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Masukkan password"
+                  />
+                  <button
+                    type="button"
+                    className="absolute right-3 top-3 text-blue-500 hover:text-blue-700"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? (
+                      <FaEyeSlash size={20} />
+                    ) : (
+                      <FaEye size={20} />
+                    )}
+                  </button>
+                </div>
+
+                {/* Tombol Close */}
+                <div className="modal-action flex justify-end mt-4">
+                  <form method="dialog">
+                    <button className="btn bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition">
+                      Close
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </dialog>
+            {/* Modal Delete */}
+            <dialog
+              id="delete_modal"
+              className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm"
+            >
+              <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+                <h3 className="text-lg font-semibold">Hapus User</h3>
+                <p className="text-gray-600">
+                  Apakah Anda yakin ingin menghapus{" "}
+                  <strong>{selectedUser?.userName}</strong>?
+                </p>
+                <div className="flex justify-end gap-2 mt-4">
+                  <button
+                    onClick={() =>
+                      document.getElementById("delete_modal").close()
+                    }
+                    className="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg"
+                  >
+                    Batal
+                  </button>
+                  <button className="px-4 py-2 bg-red-600 text-white rounded-lg">
+                    Hapus
+                  </button>
                 </div>
               </div>
             </dialog>
@@ -125,7 +275,9 @@ const GenerateUser = () => {
             <tbody>
               {loading ? (
                 <tr>
-                  <td colSpan="3" className="text-center py-6">Loading...</td>
+                  <td colSpan="3" className="text-center py-6">
+                    Loading...
+                  </td>
                 </tr>
               ) : users.length === 0 ? (
                 <tr>
@@ -137,18 +289,29 @@ const GenerateUser = () => {
                 currentUsers.map((user, index) => (
                   <tr
                     key={user.id}
-                    className={`border-b border-gray-200 ${index % 2 === 0 ? "bg-gray-50" : "bg-white"
-                      }`}
+                    className={`border-b border-gray-200 ${
+                      index % 2 === 0 ? "bg-gray-50" : "bg-white"
+                    }`}
                   >
-                    <td className="py-3 px-4">{indexOfFirstItem + index + 1}</td>
+                    <td className="py-3 px-4">
+                      {indexOfFirstItem + index + 1}
+                    </td>
                     <td className="py-3 px-4">{user.userName}</td>
                     <td className="py-3 px-4">{user.divisi}</td>
                     <td className="py-3 px-4 flex gap-2">
-                      <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded-lg">
+                      <button
+                        className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded-lg"
+                        onClick={() =>
+                          document.getElementById("my_modal_2").showModal()
+                        }
+                      >
                         <FaUserEdit />
                       </button>
                       <button
-                        onClick={() => handleDelete(user.id)}
+                        onClick={() => {
+                          document.getElementById("delete_modal").showModal();
+                          // handleDelete(user.id);
+                        }}
                         className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-lg"
                       >
                         <FaTrashAlt />
@@ -163,26 +326,21 @@ const GenerateUser = () => {
 
         {/* Pagination */}
         <div className="mt-4 flex justify-center">
-          {Array.from(
-            { length: Math.ceil(users.length / perPage) },
-            (_, i) => (
-              <button
-                key={i + 1}
-                onClick={() => paginate(i + 1)}
-                className={`mx-1 px-3 py-1 rounded ${currentPage === i + 1
-                    ? "bg-blue-900 text-white"
-                    : "bg-gray-200"
-                  }`}
-              >
-                {i + 1}
-              </button>
-            )
-          )}
+          {Array.from({ length: Math.ceil(users.length / perPage) }, (_, i) => (
+            <button
+              key={i + 1}
+              onClick={() => paginate(i + 1)}
+              className={`mx-1 px-3 py-1 rounded ${
+                currentPage === i + 1 ? "bg-blue-900 text-white" : "bg-gray-200"
+              }`}
+            >
+              {i + 1}
+            </button>
+          ))}
         </div>
       </div>
     </div>
   );
 };
-
 
 export default GenerateUser;
