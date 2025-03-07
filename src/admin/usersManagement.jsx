@@ -103,15 +103,33 @@ const GenerateUser = () => {
         <div className="bg-white rounded-lg shadow-md overflow-hidden">
           <div className="flex bg-[#110770] font-semibold place-content-between">
             <p className="py-3 px-6 text-white">Daftar User</p>
-            {/* Modal button */}
+
+            {/* Modal button tambah*/}
             <button
               className="px-6 flex p-1 place-items-center"
-              onClick={() => document.getElementById("my_modal_1").showModal()}
+              onClick={() => document.getElementById("add_modal").showModal()}
             >
               <FaPlus className="mr-2 bg-blue text-2xl text-white" />
             </button>
-            {/* Modal input */}
-            <dialog id="my_modal_1" className="modal">
+            {/* 
+            
+            <button
+              className="px-6 flex p-1 place-items-center"
+              onClick={() => document.getElementById("edit_modal").showModal()}
+            >
+              <FaPlus className="mr-2 bg-blue text-2xl text-white" />
+            </button>
+            
+            <button
+              className="px-6 flex p-1 place-items-center"
+              onClick={() => document.getElementById("delete").showModal()}
+            >
+              <FaPlus className="mr-2 bg-blue text-2xl text-white" />
+            </button>
+            */}
+
+            {/* Modal input tambah*/}
+            <dialog id="add_modal" className="modal">
               <div className="modal-box bg-white p-6 rounded-lg shadow-lg">
                 <h3 className="font-bold text-xl text-blue-900 mb-4">
                   Tambah User
@@ -173,8 +191,9 @@ const GenerateUser = () => {
                 </div>
               </div>
             </dialog>
+
             {/* modal edit */}
-            <dialog id="my_modal_2" className="modal">
+            <dialog id="edit_modal" className="modal">
               <div className="modal-box bg-white p-6 rounded-lg shadow-lg">
                 <h3 className="font-bold text-xl text-blue-900 mb-4">
                   Edit User
@@ -225,7 +244,6 @@ const GenerateUser = () => {
                     )}
                   </button>
                 </div>
-
                 {/* Tombol Close */}
                 <div className="modal-action flex justify-end mt-4">
                   <form method="dialog">
@@ -236,32 +254,35 @@ const GenerateUser = () => {
                 </div>
               </div>
             </dialog>
-            {/* Modal Delete */}
+
+
+
+            {/* Modal delete */}
             <dialog
               id="delete_modal"
-              className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm"
+              className="fixed p-6 rounded-lg"
             >
-              <div className="bg-white p-6 rounded-lg shadow-lg w-96">
-                <h3 className="text-lg font-semibold">Hapus User</h3>
-                <p className="text-gray-600">
-                  Apakah Anda yakin ingin menghapus{" "}
-                  <strong>{selectedUser?.userName}</strong>?
-                </p>
-                <div className="flex justify-end gap-2 mt-4">
-                  <button
-                    onClick={() =>
-                      document.getElementById("delete_modal").close()
-                    }
-                    className="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg"
-                  >
-                    Batal
-                  </button>
-                  <button className="px-4 py-2 bg-red-600 text-white rounded-lg">
-                    Hapus
-                  </button>
-                </div>
+              <h3 className="text-lg text-blue-900 font-bold">Hapus User</h3>
+              <p className="text-blue-900 ">
+                Apakah Anda yakin ingin menghapus{" "}
+                <strong>{selectedUser?.userName}</strong>?
+              </p>
+              <div className="flex justify-end gap-2 mt-4">
+                <button
+                  onClick={() =>
+                    document.getElementById("delete_modal").close()
+                  }
+                  className="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg"
+                >
+                  Batal
+                </button>
+                <button className="px-4 py-2 bg-red-600 text-white rounded-lg">
+                  Hapus
+                </button>
               </div>
             </dialog>
+
+
           </div>
           <table className="w-full table-auto border-collapse">
             <thead>
@@ -289,9 +310,8 @@ const GenerateUser = () => {
                 currentUsers.map((user, index) => (
                   <tr
                     key={user.id}
-                    className={`border-b border-gray-200 ${
-                      index % 2 === 0 ? "bg-gray-50" : "bg-white"
-                    }`}
+                    className={`border-b border-gray-200 ${index % 2 === 0 ? "bg-gray-50" : "bg-white"
+                      }`}
                   >
                     <td className="py-3 px-4">
                       {indexOfFirstItem + index + 1}
@@ -330,9 +350,8 @@ const GenerateUser = () => {
             <button
               key={i + 1}
               onClick={() => paginate(i + 1)}
-              className={`mx-1 px-3 py-1 rounded ${
-                currentPage === i + 1 ? "bg-blue-900 text-white" : "bg-gray-200"
-              }`}
+              className={`mx-1 px-3 py-1 rounded ${currentPage === i + 1 ? "bg-blue-900 text-white" : "bg-gray-200"
+                }`}
             >
               {i + 1}
             </button>
