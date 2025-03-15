@@ -19,6 +19,7 @@ import {
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import Modal from "react-modal";
+import { submitAttendance } from "../../pages/api/goAbsen/attendance";
 
 const userIcon = new L.Icon({
   iconUrl: "https://img.icons8.com/ios-filled/50/ff0000/marker.png",
@@ -65,48 +66,17 @@ const GoAbsen = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!userId) {
-      toast.error("Gagal mendapatkan userId. Harap login kembali.");
-      return;
-    }
-
-    const attendanceData = {
-      userId,
-      locationId: 1,
-      date: new Date().toISOString(),
-      latitude,
-      longitude,
-      status: attendance.toUpperCase(),
-      statusDescription: attendance === "izin" ? reason : "",
-      isPresent: attendance === "hadir"
-    };
-
+  
     try {
-      const response = await fetch("http://localhost:3001/attendance", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`
-        },
-        body: JSON.stringify(attendanceData)
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        if (errorData.message === "Anda sudah mencatat kehadiran hari ini.") {
-          toast.warning("Anda sudah melakukan absen hari ini.");
-          return;
-        }
-        throw new Error("Gagal menyimpan data absensi.");
-      }
-
-      toast.success(`${userName} berhasil absen`);
+      const name = await submitAttendance({ userId, userName, attendance, reason, latitude, longitude });
+      toast.success(`${name} berhasil absen`);
       setAttendance("");
       setReason("");
     } catch (error) {
-      toast.error("Absen gagal, Anda tidak berada di area sekolah.");
+      toast.error(error.message);
     }
   };
+  
 
   return (
     <div className="flex h-screen">

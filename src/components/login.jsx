@@ -4,12 +4,15 @@ import imageLogin from "../assets/image_login.png";
 import googleLogo from "../assets/google.png";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
+import { loginUser } from "../../pages/api/auth/login-user";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const validateEmail = (email) => {
@@ -27,20 +30,7 @@ const Login = () => {
     setError(null);
 
     try {
-      const response = await fetch("http://localhost:3001/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Login failed");
-      }
-
-      const data = await response.json();
+      const data = await loginUser(email, password);
       localStorage.setItem("accessToken", data.accessToken);
       localStorage.setItem("userName", data.userName);
       localStorage.setItem("userId", data.userId);
@@ -70,14 +60,25 @@ const Login = () => {
             }`}
             required
           />
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full px-4 py-2 border rounded-md text-gray-800 focus:outline-none"
-            required
-          />
+
+          <div className="relative w-full">
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full px-4 py-2 border rounded-md text-gray-800 focus:outline-none pr-10"
+              required
+            />
+            <button
+              type="button"
+              className="absolute right-3 top-3 text-blue-500 hover:text-blue-700"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <FaEyeSlash size={20} /> : <FaEye size={20} />}
+            </button>
+          </div>
+
           <button
             type="submit"
             className="w-full bg-gray-300 text-gray-800 py-2 rounded-md font-semibold hover:bg-gray-400 transition"
@@ -86,20 +87,6 @@ const Login = () => {
             {loading ? "Loading..." : "Masuk"}
           </button>
           {error && <p className="text-red-500 text-center mt-2">{error}</p>}
-          {/* <p className="text-center">Atau</p>
-          <button
-            type="button"
-            className="w-full bg-white text-gray-800 py-2 rounded-md font-semibold flex justify-center items-center gap-3 border hover:bg-gray-100 transition"
-          >
-            <img src={googleLogo} alt="Google Logo" className="w-5 h-5" />
-            Masuk menggunakan Google
-          </button>
-          <p className="text-center mt-4">
-            Tidak punya akun?{" "}
-            <Link to="/register" className="text-blue-300 hover:underline">
-              Daftar disini
-            </Link>
-          </p> */}
         </form>
       </div>
 

@@ -10,7 +10,7 @@ const AdminRekap = () => {
   const [absensi, setAbsensi] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const [perPage] = useState(5);
+  const [perPage] = useState(10);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const AdminRekap = () => {
         const userId = getUserIdFromToken(token);
 
         const response = await axios.get(
-          `http://localhost:3001/attendance/user/${userId}`
+          `http://localhost:3001/attendance`
         );
         setAbsensi(response.data);
       } catch (error) {
